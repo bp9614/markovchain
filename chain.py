@@ -4,7 +4,7 @@ from numpy.random import choice
 from collections import Counter
 
 
-class MarkovChain:
+class TrigramMarkovChain:
 
     def __init__(self, file, encoding=None):
         with open(file, 'r', encoding=encoding) as file:
@@ -16,15 +16,12 @@ class MarkovChain:
     def generate_text(self, length=100):
         sentence = str(choice([' '.join(bi) for bi,_ in self.trigram.keys()],
                               1, p=np.array(
-                list(self.trigram.values()))/sum(self.trigram.values()))[0])
-
-        first, second = sentence.split(' ')
+                list(self.trigram.values()))/sum(self.trigram.values()))[0]).split(' ')
 
         for _ in range(2, length):
-            first, second = second, self.next_word(first, second)
-            sentence = ' '.join((sentence, second))
+            sentence.append(self.next_word(sentence[-2], sentence[-1]))
 
-        return sentence
+        return ' '.join(sentence)
 
     def next_word(self, first, second):
         third, count = [], []

@@ -1,8 +1,8 @@
-from chain import MarkovChain
+from chain import TrigramMarkovChain
 
 
 def main():
-    green_eggs_chain = MarkovChain('sample/greenEggs.txt')
+    green_eggs_chain = TrigramMarkovChain('sample/greenEggs.txt')
     print(green_eggs_chain.generate_text())
 
 if __name__ == '__main__':
